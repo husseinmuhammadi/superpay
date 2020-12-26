@@ -1,0 +1,102 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "ir.asan.micro";
+option java_outer_classname = "MicroServiceProto";
+option objc_class_prefix = "";
+package micro;
+service MicroService {
+  rpc generalCall (RequestPr) returns (ResponsePr) {
+  }
+  rpc paymentNotify (RequestPr) returns (ResponsePr) {
+  }
+  rpc inquiry (RequestPr) returns (ResponsePr) {
+  }
+}
+message RequestPr {
+  //
+  // Headers
+  //
+  string protocolVersion = 1;
+  string langauge = 2;
+  //
+  int32 callerId = 11;
+  int64 callerReqId = 12;
+  int32 hostId = 13;
+  int64 hostReqId = 14;
+  int64 hostReqTime = 15;
+  int32 opCode = 16;
+  string mobileNo = 17;
+  int64 terminalId = 18;
+  int64 subscriberId = 19;
+  string clientTypeInfo = 20;
+  int64 amount = 41;
+  string paymentId = 42;
+  bool paymentCapability = 43;
+  string serverBackData = 44;
+  //
+  // Payload
+  //
+  string payload = 51;
+  //
+  // Payment
+  //
+  int32 paymentStatus = 70;
+  string paymentStatusMessage = 71;
+  int64 appliedAmount = 72;
+  string appliedAmountDecription = 73;
+  string rrn = 74;
+  string settleToken = 75;
+  int64 balance = 76;
+  int64 serviceReqId = 77;
+  string paymentPayload = 78;
+
+  string timeZone = 90;
+  string currency = 91;
+  string region = 92;
+
+  string accountId = 93;
+}
+message ResponsePr {
+  //
+  // Header
+  //
+  int64 serviceReqId = 1;
+  int32 callerId = 11;
+  int64 callerReqId = 12;
+  int32 hostId = 13;
+  int64 hostReqId = 14;
+  int64 hostReqTime = 15;
+  string serverBackData = 21;
+  //
+  // Payload & status
+  //
+  int32 statusCode = 51;
+  string statusMessage = 52;
+  string traceMessage = 53;
+  string payload = 54;
+  //
+  // Payment
+  //
+  bool paymentNeed = 71;
+  string paymentId = 72;
+  int64 amount = 73;
+  int64 merchant = 74;
+  string ibanShare = 75;
+  string description = 76;
+  string rrn = 77;
+  string billId = 78;
+  int64 serviceCode = 79;
+  string paymentToken = 80;
+  SettleMode settleMode = 81;
+  bool checkCustomerIdentityInPayment = 82; // doing shahkar check before/after payment
+
+  int32 discount = 94;
+  int32 wage = 95;
+  int32 tax = 96;
+}
+
+enum SettleMode {
+  UP_TO_PAYMENT = 0;
+  AUTO_SETTLE = 1;
+  MANUAL_SETTLE = 2;
+}

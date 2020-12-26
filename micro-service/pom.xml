@@ -10,10 +10,10 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>wallet</artifactId>
+    <artifactId>micro-service</artifactId>
 
     <build>
-        <finalName>wallet-client</finalName>
+        <finalName>wallet-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -24,7 +24,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.superpay.wallet.Application</mainClass>
+                            <mainClass>ir.asan.micro.WalletServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -33,6 +33,18 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>me.dinowernli</groupId>
+            <artifactId>java-grpc-prometheus</artifactId>
+            <version>0.3.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-all</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>micro-api</artifactId>
