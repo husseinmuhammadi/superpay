@@ -12,10 +12,32 @@ public class Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
+    public static final String WALLET_IP = "localhost";
+    public static final int WALLET_PORT = 9870;
+
     public static void main(String[] args) {
         LOGGER.info("Application started!");
         Application application = new Application();
         application.test();
+        application.cashInMethod();
+    }
+
+    private void cashInMethod() {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(WALLET_IP, WALLET_PORT).usePlaintext().build();
+        MicroServiceGrpc.MicroServiceBlockingStub blockingStub = MicroServiceGrpc.newBlockingStub(channel);
+        ResponsePr responsePr = blockingStub.generalCall(RequestPr.newBuilder()
+                .setProtocolVersion("v1")
+                .setLangauge("en")
+                .setHostId(3010)
+                .setHostReqId(278800001754L)
+                .setHostReqTime(1609052230L)
+                .setOpCode(1501)
+                .setMobileNo("05520000020")
+                .setClientTypeInfo("{\"os\": 1, \"version\": \"1.0.0\", \"IP\": \"172.22.0.1\", \"distribution\": 3001}")
+                .setPayload("{\"wal\":5}")
+                .setAccountId("164")
+                .build());
+        channel.shutdown();
     }
 
     void test() {
